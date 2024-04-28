@@ -17,7 +17,7 @@ class PhotosController < ActionController::Base
     owner = User.where({ :id => params.fetch("input_owner_id")}).first
     p.owner_id = params.fetch("input_owner_id")
     p.save
-    redirect_to("/photos")
+    redirect_to("/photos/#{p.id}")
   end
 
   def update
@@ -31,6 +31,7 @@ class PhotosController < ActionController::Base
 
   def destroy
     photo_id = params.fetch("id")
+    photo = Photo.where({ :id => photo_id }).first
     photo.destroy
     redirect_to("/photos")
   end
@@ -42,7 +43,7 @@ class PhotosController < ActionController::Base
     c.photo_id = photo_id
 
     author_id = params.fetch("input_author_id")
-    c.owner_id = author_id
+    c.author_id = author_id
 
     comment = params.fetch("input_comment")
     c.body = comment
